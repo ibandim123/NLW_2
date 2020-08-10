@@ -1,0 +1,40 @@
+
+.input.textarea-block {
+    position: relative;
+  }
+ 
+.textarea-block + .textarea-block {
+    margin-top: 1.4rem;
+    margin-bottom: 1.4rem;
+  }
+ 
+.textarea-block label {
+    font-size: 1.4rem;
+  }
+ 
+.textarea-block textarea {
+    width: 100%;
+    height: 16rem;
+    min-height: 8rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    border-radius: 0.8rem;
+    background: var(--color-input-background);
+    border: 1px solid var(--color-line-in-white);
+    outline: 0;
+    resize: vertical; /* Só pode aumentar de tamanho verticalmente*/
+    padding: 1.2rem 1.6rem;
+    font: 1.6rem Archivo;
+  }
+ /*Estilizar o input-block com focus, focus-within vai estilizar o 
+ Esse trecho vai fazer aparecer uma borda quando o input for selecionado*/
+.textarea-block:focus-within::after {
+   width: calc(100% - 3.2rem);
+   height: 2px;
+   content: ''; /*Esse content é obrigatório após o uso do after ou before*/
+   background: var(--color-primary-light);
+   position: absolute;
+   left: 1.6rem;
+   right: 1.6rem;
+   bottom: 6px;
+  } 
