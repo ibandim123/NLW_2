@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom' //Para não recarregar a página ao clicar
+
 import logoimg from '../../assets/images/logo.svg'
 import landingimg from '../../assets/images/landing.svg'
 import studyIcon from '../../assets/images/icons/study.svg'
 import giveClassesIcon from '../../assets/images/icons/give-classes.svg'
 import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg'
+
 import api from '../../services/api'
 
 import './style.css';
@@ -16,9 +18,9 @@ function Landing() {
         api.get('connections').then(res => {
             
             console.log(res)
-            /*const { total } = res.data;
+            const { total } = res.data;
 
-            setTotalConnections(total);*/
+            setTotalConnections(total);
         })
     }, []) //Uma função que recebe dois parâmetros, o primeiro é uma função e o segundo é um array que contém informação que vão disparar assim que a variável mudar.
 

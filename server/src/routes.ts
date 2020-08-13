@@ -10,6 +10,8 @@ const connectionsController = new ConnectionsController()
 //Dados viram no corpo da requisição
 routes.get('/classes', classesController.index)
 routes.post('/classes', classesController.create)
-
+//routes.get('/connections/:id',connectionsController.show)
 routes.post('/connections', connectionsController.create)
+routes.get('/connections', connectionsController.index)
+
 export default routes;

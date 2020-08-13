@@ -21,4 +21,24 @@ export default class ConnectionsController {
 
         return res.status(201).send()
     }
+
+    async show( req: Request , res: Response ) { 
+        
+        const { id } = req.params; 
+
+        const users = req.headers.authorization;
+
+        const show = await db("users")
+        .where("id",id)
+        .select("id")
+        .first();
+
+        if(show.users!== users){
+            return res.status(401).json({erro:"Operation not permitted."});
+
+        }
+        await db("users").where("id",id)
+        return res.status(204).send();
+
+    }
 }

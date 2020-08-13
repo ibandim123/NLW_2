@@ -1,12 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
+
 import PageHeader from '../../components/PageHeader';
 import warningIcon from '../../assets/images/icons/warning.svg'
+
 import './style.css'
+
 import Input from '../../components/Input';
 import Textarea from '../../components/Textarea';
 import Select from '../../components/Select';
 
 function Teacherform() {
+  const [name, setName] = useState('');
+  const [avatar, setAvatar] = useState('');
+  const [bio, setBio] = useState('');
+  const [whatsapp, setWhat] = useState('');
+
+  const [subject, setSubject] = useState('');
+  const [cost, setCost] = useState('');
+
+
+
   const [scheduleItems, setScheduleItems] = useState([
     {
       week_day: 0,
@@ -26,7 +39,33 @@ function Teacherform() {
       }
     ]) 
   }
+  
+  function setScheduleItemsValue(position: number, field: string, value: string) {
+    const updatedScheduleItems = scheduleItems.map((scheduleItems, index ) => {
+      if( index === position ) {
+          return { ... scheduleItems,[field]: value }
+      }
+      return  scheduleItems;
+    })
+    
+    //setScheduleItemsValue(updatedScheduleItems)
+    
+  
+  }
 
+  function handleCreateClass(e: FormEvent) {
+    e.preventDefault();
+    console.log({
+      name,
+      avatar,
+      whatsapp,
+      bio,
+      subject,
+      cost,
+      scheduleItems,
+    })
+
+  }
 
     return (
       <div id="page-teacher-form" className="container">
@@ -36,13 +75,33 @@ function Teacherform() {
         />  
 
         <main>
+          <form onSubmit={handleCreateClass} >
           <fieldset>
             <legend>Seus dados</legend>
           
-              <Input name="name" label="Nome Completo"/>
-              <Input name="avatar" label="Avatar"/> 
-              <Input name="whatsapp" label="Whatsapp"/> 
-              <Textarea name = "bio" label = "Biografia" />
+              <Input 
+               name="name"
+               label="Nome Completo"
+                value={name}
+                onChange={(e) => {setName(e.target.value)}} /> 
+              <Input 
+               name="avatar"
+               label="Avatar"
+               value={avatar}
+               onChange={(e) => {setAvatar(e.target.value)}} />
+              
+              <Input 
+               name="whatsapp"
+               label="Whatsapp"
+               value={whatsapp}
+               onChange={(e) => {setWhat(e.target.value)}} />
+               
+              <Textarea 
+               name = "bio" 
+               label = "Biografia"
+               value={bio}
+               onChange={(e) => {setBio(e.target.value)}}
+               />
 
           </fieldset>
 
@@ -52,6 +111,8 @@ function Teacherform() {
               <Select 
                 name="subject"
                 label="Matéria"
+                value={subject}
+                onChange={(e) => { setSubject(e.target.value) }}
                 options = {[
                   { value: 'Artes' , label: 'Artes'},
                   { value: 'Biologia' , label: 'Biologia'},
@@ -62,10 +123,16 @@ function Teacherform() {
                 ]}
 
                />
-              <Input name="cost" label="Custo da sua aula por hora"/> 
+              <Input 
+                name="cost" 
+                label="Custo da sua aula por hora"
+                value={cost}
+                onChange={(e) => { setCost(e.target.value) }}  
+              /> 
              
              
           </fieldset>
+          
 
           <fieldset>
             <legend>Horários Disponíveis
@@ -74,13 +141,16 @@ function Teacherform() {
               </button>
             </legend>
 
-           {scheduleItems.map(scheduleItems => {
+           {scheduleItems.map((scheduleItems, index) => {
              return (
               <div key={scheduleItems.week_day} className="schedule-item">
                 <Select 
                     name="week_day"
                     label="Dia da Semana"
+                    value={scheduleItems.week_day}
+                    onChange={e => setScheduleItemsValue(index, 'week_day', e.target.value)}
                     options = {[
+
                       { value: '0' , label: 'Domingo'},
                       { value: '1' , label: 'Segunda-feira'},
                       { value: '2' , label: 'Terça-feira'},
@@ -91,8 +161,26 @@ function Teacherform() {
                     
                     ]}
                   />
-                  <Input name="from" label="Das" type="time"/>
-                  <Input name="to" label="Até" type="time"/>
+
+                  <Input 
+
+                    name="from"
+                    label="Das"
+                    type="time"
+                    value={scheduleItems.from}
+                    onChange={e => setScheduleItemsValue(index, 'from', e.target.value)}                    
+                
+                  />
+
+                  <Input 
+                  
+                    name="to"
+                    label="Até"
+                    type="time"
+                    value={scheduleItems.to}
+                    onChange={e => setScheduleItemsValue(index, 'to', e.target.value)}                  
+                  />
+
               </div>
              )
            })}
@@ -105,10 +193,11 @@ function Teacherform() {
                Importante! <br/>
                Preenchar todos os dados            
             </p>
-            <button type = "button"> 
-            Salvar Cadastro
+            <button type="submit"> 
+            Salvar Cadtastro
             </button>
           </footer>
+          </form>
 
         </main>
       </div>
